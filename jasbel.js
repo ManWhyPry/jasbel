@@ -46,12 +46,12 @@ class JasbelInterpreter {
         this.#builtins.set('*', () => {
             const b = this.#stack.pop()
             const a = this.#stack.pop()
-            this.#stack.push(a - b)
+            this.#stack.push(a * b)
         })
         this.#builtins.set('/', () => {
             const b = this.#stack.pop()
             const a = this.#stack.pop()
-            this.#stack.push(a - b)
+            this.#stack.push(a / b)
         })
         this.#builtins.set('>>', () => {
             const b = this.#stack.pop()
