@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasbel</title>
+    <script src="jasbel.js"></script>
+    <script>
+        inter = new JasbelInterpreter()
+    </script>
+    <style>
+        body {
+            background-color: #23272A;
+        }
+
+        .container {
+            width: 96vw;
+            height: 10vh;
+            margin: 2vh auto;
+            display: block;
+        }
+
+        .button-eval {
+            width: calc(100% - 11vh);
+            height: 10vh;
+            font-size: xx-large;
+            background-color: white;
+            color: #5865F2;
+        }
+
+        .button-docs {
+            width: 10vh;
+            height: 10vh;
+            font-size: xx-large;
+            background-color: white;
+            color: #5865F2;
+        }
+
+        .inout {
+            width: 96vw;
+            height: 40vh;
+            border: 1px solid white;
+            margin: auto;
+            display: block;
+            font-size: xx-large;
+            background-color: #23272A;
+            color: white;
+            overflow: scroll;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="stdin" class="inout"></textarea>
+    <div class="container">
+        <button class="button-eval"
+            onclick="inter.eval(document.getElementById('stdin').value); document.getElementById('stdout').innerText = inter.stdout;">Eval</button>
+        <button class="button-docs" onclick="window.location.href='https://github.com/ManWhyPry/jasbel'">📖</button>
+    </div>
+    <pre id="stdout" class="inout"></pre>
+</body>
+
+</html>
