@@ -43,10 +43,55 @@ class JasbelInterpreter {
             const a = this.#stack.pop()
             this.#stack.push(a - b)
         })
+        this.#builtins.set('*', () => {
+            const b = this.#stack.pop()
+            const a = this.#stack.pop()
+            this.#stack.push(a - b)
+        })
+        this.#builtins.set('/', () => {
+            const b = this.#stack.pop()
+            const a = this.#stack.pop()
+            this.#stack.push(a - b)
+        })
+        this.#builtins.set('>>', () => {
+            const b = this.#stack.pop()
+            const a = this.#stack.pop()
+            this.#stack.push(a >> b)
+        })
+        this.#builtins.set('<<', () => {
+            const b = this.#stack.pop()
+            const a = this.#stack.pop()
+            this.#stack.push(a << b)
+        })
         this.#builtins.set('=', () => {
             const b = this.#stack.pop()
             const a = this.#stack.pop()
             this.#stack.push(Number(a == b))
+        })
+        this.#builtins.set('!=', () => {
+            const b = this.#stack.pop()
+            const a = this.#stack.pop()
+            this.#stack.push(Number(a != b))
+        })
+        this.#builtins.set('<', () => {
+            const b = this.#stack.pop()
+            const a = this.#stack.pop()
+            this.#stack.push(Number(a < b))
+        })
+        this.#builtins.set('>', () => {
+            const b = this.#stack.pop()
+            const a = this.#stack.pop()
+            this.#stack.push(Number(a > b))
+        })
+        this.#builtins.set('<=', () => {
+            const b = this.#stack.pop()
+            const a = this.#stack.pop()
+            this.#stack.push(Number(a <= b))
+        })
+        this.#builtins.set('>=', () => {
+            const b = this.#stack.pop()
+            const a = this.#stack.pop()
+            this.#stack.push(Number(a >= b))
         })
         this.#builtins.set('branch', () => {
             this.#state = State_brabch
@@ -102,6 +147,14 @@ class JasbelInterpreter {
         this.#builtins.set('clear', () => {
             this.#stdout = ''
         })
+        this.#builtins.set('eval', () => {
+            const string = []
+            let char
+            while (char = this.#stack.pop()) {
+                string.push(char)
+            }
+            this.#instructions.push(...string.map(e => String.fromCharCode(e)).join('').match(/\S+/g).reverse())
+        })
         this.#words = new Map()
         this.#sentence = []
         this.#remNestLevel = 0
@@ -145,8 +198,9 @@ class JasbelInterpreter {
                         break
                     }
 
-                    this.#stdout += 'unknown word\n'
+                    this.#stdout += 'unknown word' + current + '\n'
                     this.trace(current)
+                    this.#instructions = []
                     return
                 }
 
@@ -159,6 +213,7 @@ class JasbelInterpreter {
                     if (current == 'end_def') {
                         this.#stdout += 'word cannot be end_def\n'
                         this.trace(current)
+                        this.#instructions = []
                         return
                     }
                     this.#sentence.push(current)
