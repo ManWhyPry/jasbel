@@ -1,0 +1,32 @@
+def '#' 35 end_def
+def '\n' 10 end_def
+
+def if branch? end_def
+def unless if branch end_def
+def end_rem end_def
+
+def pred 1 - end_def
+
+def '#'_loop
+    def '#'_loop_internal
+        dup unless rem
+            '#' print_char
+            pred
+            '#'_loop_internal
+        end_rem
+    end_def
+    '#'_loop_internal drop
+end_def
+
+def ladder_loop
+    def ladder_loop_internal
+        dup unless rem
+            dup '#'_loop '\n' print_char
+            pred
+            ladder_loop_internal
+        end_rem
+    end_def
+    ladder_loop_internal drop
+end_def
+
+13 ladder_loop

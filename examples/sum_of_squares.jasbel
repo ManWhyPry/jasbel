@@ -1,0 +1,5 @@
+def sum + end_def
+def square dup * end_def
+def sum_of_squares square swap square sum end_def
+
+1 2 sum_of_squares print_num
